@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String @unique
+  hash  String
+
+  firstName String?
+  lastName  String?
+
+  @@map("users")
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // hash  String
+
+  firstName String
+  lastName  String
+
+  phone String @unique
+  email String @unique
+
+  orders Order[]
+
+  @@map("customers")
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderDate   DateTime
+  total_price Int
+
+  customerId Int
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  order_products OrderProducts[]
+
+  @@map("orders")
+}
+
+model OrderProducts {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  quantity Int
+
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id])
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("order_products")
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+
+  name        String
+  description String?
+  price       Int
+
+  productTypeId Int
+  productType   ProductType @relation(fields: [productTypeId], references: [id])
+
+  productIngredients ProductIngredients[]
+  orderProducts      OrderProducts[]
+
+  @@map("products")
+}
+
+model ProductType {
+  id Int @id @default(autoincrement())
+
+  value   String
+  product Product[]
+
+  @@map("product_types")
+}
+
+model Employee {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  firstName String
+  lastName  String
+
+  address String
+  phone   String @unique
+  email   String @unique
+  salary  Int
+
+  @@map("employees")
+}
+
+model Distributor {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  firstName String
+  lastName  String
+
+  phone String @unique
+  email String @unique
+
+  ingredient Ingredient[]
+
+  @@map("distributors")
+}
+
+model Ingredient {
+  id Int @id @default(autoincrement())
+
+  name  String
+  value String
+  cost  Int
+
+  distributorId      Int
+  distributor        Distributor          @relation(fields: [distributorId], references: [id])
+  productIngredients ProductIngredients[]
+
+  @@map("ingredients")
+}
+
+model ProductIngredients {
+  id Int @id @default(autoincrement())
+
+  quantity Int
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  ingredientId Int
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+
+  @@map("products_ingredients")
+}

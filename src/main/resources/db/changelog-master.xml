@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <include file="db/changelog/customer/create-table.yaml"/>
+    <include file="db/changelog/employee/create-table.yaml"/>
+    <include file="db/changelog/ingredient/create-table.yaml"/>
+    <include file="db/changelog/product/create-table.yaml"/>
+    <include file="db/changelog/product/create-product-ingredients.yaml"/>
+    <include file="db/changelog/order/create-table.yaml"/>
+    <include file="db/changelog/order/create-order-products.yaml"/>
+    <include file="db/changelog/distributor/create-table.yaml"/>
+
+</databaseChangeLog>

@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-employees-table
+      author: Elena Tiltu
+      changes:
+        - createTable:
+            tableName: employees
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: varchar(100)
+              - column:
+                  name: last_name
+                  type: varchar(100)
+              - column:
+                  name: phone
+                  type: varchar(15)
+              - column:
+                  name: email
+                  type: varchar(255)
+              - column:
+                  name: address
+                  type: varchar(255)
+              - column:
+                  name: salary
+                  type: bigint

@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-product-ingredients-table
+      author: Elena Tiltu
+      changes:
+        - createTable:
+            tableName: product_ingredients
+            columns:
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_product_ingredients_product
+                    referencedTableName: products
+                    referencedColumnNames: id
+              - column:
+                  name: ingredient_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_product_ingredients_ingredient
+                    referencedTableName: ingredients
+                    referencedColumnNames: id
